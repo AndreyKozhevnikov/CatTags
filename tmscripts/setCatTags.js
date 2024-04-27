@@ -13,7 +13,7 @@
 function createButtons(){ 
 
   let lstPopular=[
-    ['b929e2ba-6171-40e6-a446-f6224d9b55ae','Lookup: Search Multiple Columns, Open Links, etc)','64e07510-1788-4206-b6dc-b5f543a35137'],
+    ['b929e2ba-6171-40e6-a446-f6224d9b55ae','Lookup: Search Multiple Columns, Open Links, etc)','64e07510-1788-4206-b6dc-b5f543a35137'], 
     ['4c9a22e5-d6af-4f12-b840-33d14baea679','Grid Export','64e07510-1788-4206-b6dc-b5f543a35137']
   ];
   let tabElement= document.getElementsByClassName('editable-properties')[1];
