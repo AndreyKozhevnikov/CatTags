@@ -8,7 +8,7 @@
 // @grant        none
 // ==/UserScript==
 
-function createButtons(){
+function createButtons(){ 
 
   let lstPopular=[
     ['b929e2ba-6171-40e6-a446-f6224d9b55ae','Lookup: Search Multiple Columns, Open Links, etc)','64e07510-1788-4206-b6dc-b5f543a35137'],
