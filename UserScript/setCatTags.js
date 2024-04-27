@@ -1,12 +1,11 @@
 // ==UserScript==
-// @name         XAF Bug Subject Validator
+// @name         Set tags
 // @namespace    http://tampermonkey.net/
-// @version      0.1.19
-// @description  Validate the ticket Subject according to XAF team rules
+// @version      0.1.1
+// @description  Set and search CAT Tags
 // @author       AndreyK
 // @match        https://isc.devexpress.com/internal/ticket/details/*
 // @grant        none
-// @updateURL    https://gitserver/Kozhevnikov.Andrey/tmscripts/-/raw/master/BugSubjectValidator/tmXafBugSubjectValidator.user.js
 // ==/UserScript==
 
 //when change the validation rules, change the https://gitserver/support/DXNotifications project accordingly
