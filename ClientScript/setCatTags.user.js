@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name         Set tags
 // @namespace    http://tampermonkey.net/
-// @version      0.1.2
+// @version      0.1.3
 // @description  Set and search CAT Tags
 // @author       AndreyK
 // @match        https://isc.devexpress.com/internal/ticket/details/*
 // @grant        none
+// @downloadURL  https://gitserver/Kozhevnikov.Andrey/DXCatTags/-/raw/master/ClientScript/setCatTags.user.js
+// @updateURL  https://gitserver/Kozhevnikov.Andrey/DXCatTags/-/raw/master/ClientScript/setCatTags.user.js
 // ==/UserScript==
 
 function createButtons(){ 
