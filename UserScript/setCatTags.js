@@ -9,7 +9,8 @@
 // @updateURL    https://gitserver/Kozhevnikov.Andrey/tmscripts/-/raw/master/BugSubjectValidator/tmXafBugSubjectValidator.user.js
 // ==/UserScript==
 
-
+(function() {
+  "use strict";
 function createButtons(){
 
     let lstPopular=[
@@ -143,3 +144,4 @@ function getAllFeatures(){
   ;
 	return lst;
 }
+})();
