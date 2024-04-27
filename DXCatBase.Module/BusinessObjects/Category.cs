@@ -19,7 +19,7 @@ using DevExpress.ExpressApp.SystemModule;
 namespace dxTestSolution.Module.BusinessObjects {
     [DefaultClassOptions]
 
-    public class Category :XPCustomObject {
+    public class Category :XPCustomObject, ITreeNode {
         public Category(Session session)
             : base(session) {
         }
@@ -55,5 +55,9 @@ namespace dxTestSolution.Module.BusinessObjects {
                 return GetCollection<Feature>(nameof(Features));
             }
         }
+
+        public ITreeNode Parent => null;
+
+        public IBindingList Children => Features;
     }
 }

@@ -27,9 +27,25 @@ public class CustomBlazorController :ViewController {
     public CustomBlazorController() {
         var myAction1 = new SimpleAction(this, "MyBlazorAction1", PredefinedCategory.Edit);
         myAction1.Execute += MyAction1_Execute;
+
+        var myAction2 = new SimpleAction(this, "MyExport", PredefinedCategory.Edit);
+        myAction2.Execute += MyAction2_Execute;
         // var mypopAction1 = new PopupWindowShowAction(this, "MyBlazorPopupAction1", null);
         // mypopAction1.CustomizePopupWindowParams += MyAction1_CustomizePopupWindowParams;
 
+    }
+    private void MyAction2_Execute(object sender, SimpleActionExecuteEventArgs e) {
+        var os = Application.CreateObjectSpace(typeof(Feature));
+        var lst = os.GetObjects<Feature>().ToList().OrderBy(x=>x.ParentCategory.Oid);
+
+        var resSt=new List<string>();
+        foreach (var feat in lst) {
+            if(feat.Name.ToLower().Contains("obsolete"))
+                continue;
+            var st=string.Format("['{0}','{1}','{2}']",feat.Oid.ToString(),feat.Name,feat.ParentCategory.Oid);
+            resSt.Add(st);
+        }
+        var resultString =string.Format("[{0}]", string.Join(",", resSt));
     }
 
     private void MyAction1_Execute(object sender, SimpleActionExecuteEventArgs e) {
@@ -41,21 +57,42 @@ public class CustomBlazorController :ViewController {
 
         dynamic data = JsonConvert.DeserializeObject(content);
 
-        
+
 
         //HashSet<string> test=new HashSet<string>();
         //test.Add("test1");
         //test.Add("test2");
         //test.Add("test1");
 
-        Dictionary<string,HashSet<string>> allDict=new Dictionary<string,HashSet<string>>();
+        Dictionary<string, Category> allDict = new Dictionary<string, Category>();
 
 
         foreach(var stub in data) {
-            string id = data[0].id;
-            string name = data[0].name;
-            string parentId = data[0].parentId;
-            string parentName = data[0].parentName;
+            string id = stub.id;
+            if(id.StartsWith("00000000")) {
+                continue;
+            }
+            string name = stub.name;
+            string parentId = stub.parentId;
+            string parentName = stub.parentName;
+
+            Category parentCategory;
+            allDict.TryGetValue(parentId, out parentCategory);
+            if(parentCategory == null) {
+                parentCategory = os.CreateObject<Category>();
+                parentCategory.Oid = Guid.Parse(parentId);
+                parentCategory.Name = parentName;
+                allDict[parentId] = parentCategory;
+            }
+            bool isFeatureExists = parentCategory.Features.Where(x => x.Oid == Guid.Parse(id)).Any();
+            if(isFeatureExists) {
+                continue;
+            }
+            Feature feature = os.CreateObject<Feature>();
+            feature.Oid = Guid.Parse(id);
+            feature.Name = name;
+            parentCategory.Features.Add(feature);
+
         }
 
 
@@ -76,7 +113,7 @@ public class CustomBlazorController :ViewController {
     // var os = Application.CreateObjectSpace(typeof(Contact));
     // var obj = os.CreateObject<Contact>();
     // var view = Application.CreateDetailView(os, obj);
-	// var listView = Application.CreateListView(typeof(Contact), true);
+    // var listView = Application.CreateListView(typeof(Contact), true);
     // e.View = view;
     // }
     protected override void OnActivated() {

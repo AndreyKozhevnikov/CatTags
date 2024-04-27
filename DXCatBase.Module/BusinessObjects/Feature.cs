@@ -17,9 +17,19 @@ using DevExpress.ExpressApp.SystemModule;
 namespace dxTestSolution.Module.BusinessObjects {
      [DefaultClassOptions]
      [DefaultProperty("Subject")]
-    public class Feature : BaseObject {
+    public class Feature :XPCustomObject, ITreeNode {
         public Feature(Session session)
             : base(session) {
+        }
+        Guid _oid;
+        [Key(false)]
+        public Guid Oid {
+            get {
+                return _oid;
+            }
+            set {
+                SetPropertyValue(nameof(Oid), ref _oid, value);
+            }
         }
         string _name;
         public string Name {
@@ -40,7 +50,10 @@ namespace dxTestSolution.Module.BusinessObjects {
                 SetPropertyValue(nameof(ParentCategory), ref _parentCategory, value);
             }
         }
-      
+
+        public ITreeNode Parent => ParentCategory;
+
+        public IBindingList Children => new BindingList<object>();
     }
 
 }
