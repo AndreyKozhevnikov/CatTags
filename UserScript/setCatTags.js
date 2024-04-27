@@ -1,12 +1,14 @@
 // ==UserScript==
-// @name         Set tags
+// @name         XAF Bug Subject Validator
 // @namespace    http://tampermonkey.net/
-// @version      0.1.1
-// @description  Set and search CAT Tags
+// @version      0.1.19
+// @description  Validate the ticket Subject according to XAF team rules
 // @author       AndreyK
 // @match        https://isc.devexpress.com/internal/ticket/details/*
 // @grant        none
+// @updateURL    https://gitserver/Kozhevnikov.Andrey/tmscripts/-/raw/master/BugSubjectValidator/tmXafBugSubjectValidator.user.js
 // ==/UserScript==
+
 
 function createButtons(){
 
