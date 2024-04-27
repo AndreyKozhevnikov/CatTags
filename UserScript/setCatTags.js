@@ -1,4 +1,3 @@
-'use strict';
 // ==UserScript==
 // @name         Set tags
 // @namespace    http://tampermonkey.net/
