@@ -3,7 +3,7 @@
 // @name         Set tags
 // @namespace    http://tampermonkey.net/
 // @version      0.1.1
-// @description  Filter and group install tracks
+// @description  Set and search CAT Tags
 // @author       AndreyK
 // @match        https://isc.devexpress.com/internal/ticket/details/*
 // @grant        none
