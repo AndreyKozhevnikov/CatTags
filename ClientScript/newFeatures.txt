@@ -2,79 +2,6 @@
     {
         "id": "00000000-0000-0000-0000-000000000003",
         "name": "General",
-        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
-        "parentName": "Blazor Platform Specifics"
-    },
-    {
-        "id": "adf64e43-19eb-40cc-bd4e-44ecffcba66b",
-        "name": "Access Hardware (camera, GPS, barcode scan, etc.)",
-        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
-        "parentName": "Blazor Platform Specifics"
-    },
-    {
-        "id": "dbeb9194-252c-40f3-985f-5c3f422b4da3",
-        "name": "Context Menu",
-        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
-        "parentName": "Blazor Platform Specifics"
-    },
-    {
-        "id": "daca1a83-6ae9-44f7-82ff-f3c8964a3473",
-        "name": "Horizontal/Vertical Scalling to 100, 1000+ users",
-        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
-        "parentName": "Blazor Platform Specifics"
-    },
-    {
-        "id": "4b1946c9-99d7-4720-aaba-eeba8c829637",
-        "name": "Migrate Existing Projects",
-        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
-        "parentName": "Blazor Platform Specifics"
-    },
-    {
-        "id": "eb07bc3c-3240-41be-8500-e5261d7af57b",
-        "name": "Offline",
-        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
-        "parentName": "Blazor Platform Specifics"
-    },
-    {
-        "id": "e0e330a7-443e-44b7-88fe-8e2ea7e8c8f9",
-        "name": "PWA",
-        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
-        "parentName": "Blazor Platform Specifics"
-    },
-    {
-        "id": "de23fdf2-0009-4057-92dc-30d5eb9bee19",
-        "name": "Splash, Loading Panel",
-        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
-        "parentName": "Blazor Platform Specifics"
-    },
-    {
-        "id": "5ee330b7-d935-4105-86fe-87053fe20e1f",
-        "name": "TabbedMDI",
-        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
-        "parentName": "Blazor Platform Specifics"
-    },
-    {
-        "id": "e4ea49e6-c17b-48b6-8721-61968a46d3bf",
-        "name": "Themes & Customization (Compact, Bootstrap)",
-        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
-        "parentName": "Blazor Platform Specifics"
-    },
-    {
-        "id": "f50d8434-9ec3-459e-bab5-52b7741d1b4e",
-        "name": "User-Friendly URL, NavigationManager",
-        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
-        "parentName": "Blazor Platform Specifics"
-    },
-    {
-        "id": "0af481a1-f4d4-4342-9164-77fe38917e33",
-        "name": "WebAssembly",
-        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
-        "parentName": "Blazor Platform Specifics"
-    }
-,
-    {
-        "id": "00000000-0000-0000-0000-000000000003",
-        "name": "General",
         "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
         "parentName": "Views & View Items & Property Editors"
     },
@@ -105,6 +32,18 @@
     {
         "id": "63ea8d21-269e-4850-a2a0-97c00f3a7a67",
         "name": "Custom View Items & Editors",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "e72485bb-7aa7-46e7-a2e7-20c2cc62c0c2",
+        "name": "DashboardViews",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "29434ccb-511a-4bb9-a81d-a17cf950a9d4",
+        "name": "Enum Editors",
         "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
         "parentName": "Views & View Items & Property Editors"
     },
@@ -188,7 +127,7 @@
     },
     {
         "id": "02ef00bd-f7e9-4a77-ba3c-518fba6dcfe2",
-        "name": "Text Nofitications (ShowMessage)",
+        "name": "Text Nofitications (ShowMessage, Toast)",
         "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
         "parentName": "Views & View Items & Property Editors"
     }
