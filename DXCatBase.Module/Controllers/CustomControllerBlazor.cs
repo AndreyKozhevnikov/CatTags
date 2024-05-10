@@ -18,6 +18,7 @@ using dxTestSolution.Module.BusinessObjects;
 using System.IO;
 using System.ComponentModel;
 using Newtonsoft.Json;
+using DevExpress.ExpressApp.Xpo;
 
 namespace dxTestSolution.Blazor.Server.Controllers;
 //public class CustomBlazorController : ObjectViewController<DetailView,Contact> {
@@ -25,15 +26,33 @@ namespace dxTestSolution.Blazor.Server.Controllers;
 
 public class CustomBlazorController :ViewController {
     public CustomBlazorController() {
-        var myAction1 = new SimpleAction(this, "MyBlazorAction1", PredefinedCategory.Edit);
+        var myAction1 = new SimpleAction(this, "MyImport", PredefinedCategory.Edit);
         myAction1.Execute += MyAction1_Execute;
 
         var myAction2 = new SimpleAction(this, "MyExport", PredefinedCategory.Edit);
         myAction2.Execute += MyAction2_Execute;
+
+
+        var removeAction = new SimpleAction(this, "remove features", PredefinedCategory.Edit);
+        removeAction.Execute += RemoveAction_Execute;
         // var mypopAction1 = new PopupWindowShowAction(this, "MyBlazorPopupAction1", null);
         // mypopAction1.CustomizePopupWindowParams += MyAction1_CustomizePopupWindowParams;
 
     }
+
+    private void RemoveAction_Execute(object sender, SimpleActionExecuteEventArgs e) {
+        var os = Application.CreateObjectSpace(typeof(Feature));
+        var category = View.SelectedObjects[0] as Category;
+        var ftrs = category.Features.ToList();
+        for(int i = ftrs.Count - 1; i >= 0; i--) {
+            var f =os.GetObject( ftrs[i]);
+            os.Delete(f);
+        }
+        ((XPObjectSpace)os).Session.PurgeDeletedObjects();
+        ((XPObjectSpace)os).Session.CommitTransaction();
+
+    }
+
     private void MyAction2_Execute(object sender, SimpleActionExecuteEventArgs e) {
         var os = Application.CreateObjectSpace(typeof(Feature));
         var lst = os.GetObjects<Feature>().ToList().OrderBy(x=>x.ParentCategory.Oid);
@@ -52,7 +71,8 @@ public class CustomBlazorController :ViewController {
         var os = Application.CreateObjectSpace(typeof(Category));
 
 
-        var st = "c:\\Dropbox\\Programming\\JS\\DXSCScripts\\allFeatures.txt";
+        //var st = "c:\\Dropbox\\Programming\\JS\\DXSCScripts\\allFeatures.txt";
+        var st = "c:\\Dropbox\\Programming\\C#\\DXCatBase\\ClientScript\\newFeatures.txt";
         string content = File.ReadAllText(st);
 
         dynamic data = JsonConvert.DeserializeObject(content);
@@ -65,6 +85,11 @@ public class CustomBlazorController :ViewController {
         //test.Add("test1");
 
         Dictionary<string, Category> allDict = new Dictionary<string, Category>();
+
+        var existingParents=os.GetObjects<Category>().ToList(); 
+        foreach (var parent in existingParents) {
+            allDict.Add(parent.Oid.ToString(), parent);
+        }
 
 
         foreach(var stub in data) {
@@ -83,6 +108,14 @@ public class CustomBlazorController :ViewController {
                 parentCategory.Oid = Guid.Parse(parentId);
                 parentCategory.Name = parentName;
                 allDict[parentId] = parentCategory;
+            } else {
+               // var ftrs = parentCategory.Features.ToList();
+               // for(int i=ftrs.Count-1; i>=0; i--) { 
+               //     var f = ftrs[i];
+               //     os.Delete(f);
+               // }
+               //((XPObjectSpace)os).Session.PurgeDeletedObjects();
+               //((XPObjectSpace)os).Session.CommitTransaction();
             }
             bool isFeatureExists = parentCategory.Features.Where(x => x.Oid == Guid.Parse(id)).Any();
             if(isFeatureExists) {

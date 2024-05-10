@@ -1,0 +1,195 @@
+[
+    {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "name": "General",
+        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
+        "parentName": "Blazor Platform Specifics"
+    },
+    {
+        "id": "adf64e43-19eb-40cc-bd4e-44ecffcba66b",
+        "name": "Access Hardware (camera, GPS, barcode scan, etc.)",
+        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
+        "parentName": "Blazor Platform Specifics"
+    },
+    {
+        "id": "dbeb9194-252c-40f3-985f-5c3f422b4da3",
+        "name": "Context Menu",
+        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
+        "parentName": "Blazor Platform Specifics"
+    },
+    {
+        "id": "daca1a83-6ae9-44f7-82ff-f3c8964a3473",
+        "name": "Horizontal/Vertical Scalling to 100, 1000+ users",
+        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
+        "parentName": "Blazor Platform Specifics"
+    },
+    {
+        "id": "4b1946c9-99d7-4720-aaba-eeba8c829637",
+        "name": "Migrate Existing Projects",
+        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
+        "parentName": "Blazor Platform Specifics"
+    },
+    {
+        "id": "eb07bc3c-3240-41be-8500-e5261d7af57b",
+        "name": "Offline",
+        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
+        "parentName": "Blazor Platform Specifics"
+    },
+    {
+        "id": "e0e330a7-443e-44b7-88fe-8e2ea7e8c8f9",
+        "name": "PWA",
+        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
+        "parentName": "Blazor Platform Specifics"
+    },
+    {
+        "id": "de23fdf2-0009-4057-92dc-30d5eb9bee19",
+        "name": "Splash, Loading Panel",
+        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
+        "parentName": "Blazor Platform Specifics"
+    },
+    {
+        "id": "5ee330b7-d935-4105-86fe-87053fe20e1f",
+        "name": "TabbedMDI",
+        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
+        "parentName": "Blazor Platform Specifics"
+    },
+    {
+        "id": "e4ea49e6-c17b-48b6-8721-61968a46d3bf",
+        "name": "Themes & Customization (Compact, Bootstrap)",
+        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
+        "parentName": "Blazor Platform Specifics"
+    },
+    {
+        "id": "f50d8434-9ec3-459e-bab5-52b7741d1b4e",
+        "name": "User-Friendly URL, NavigationManager",
+        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
+        "parentName": "Blazor Platform Specifics"
+    },
+    {
+        "id": "0af481a1-f4d4-4342-9164-77fe38917e33",
+        "name": "WebAssembly",
+        "parentId": "64e07510-1788-4206-b6dc-b5f543a35137",
+        "parentName": "Blazor Platform Specifics"
+    }
+,
+    {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "name": "General",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "ae449694-f8b6-41a0-bfb5-0bf1733f653e",
+        "name": "Built-in View Items & Editors",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "930f8143-794b-4436-93b1-40467d3bf323",
+        "name": "Collapsible Groups (IsGroupCollapsed)",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "3043aed2-55b5-40a4-8372-45281e52fc0e",
+        "name": "Creating & Showing Views",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "9d620208-6e17-43a8-b4ac-41050b388efc",
+        "name": "Criteria Editors",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "63ea8d21-269e-4850-a2a0-97c00f3a7a67",
+        "name": "Custom View Items & Editors",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "72ed8805-57aa-4876-b613-53c8abbcb43f",
+        "name": "Filter Editors",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "a3b9686a-ddd2-4ee4-9fa9-f3b40e4f00a9",
+        "name": "Grid List Editors",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "a8065283-7474-4176-8007-2bd4688792d5",
+        "name": "Grid Print, Export",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "ad5d5471-063b-4e7e-85e5-7db12480c416",
+        "name": "Image Editors",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "ef01afe8-302c-436f-a9c8-09395d3b39fb",
+        "name": "ImmediatePostData",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "35acbdb0-470b-4151-adca-0ebec09ea434",
+        "name": "Inline Edit (Batch, etc.)",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "5f35ec54-9dcf-4f9b-b704-df9e21e8c0c7",
+        "name": "Layout End-User Customization",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "78f98b68-3d61-4516-9549-75d0b40af103",
+        "name": "Layout Generation & Customization API",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "057a89eb-59b8-47ee-b000-3a5521698887",
+        "name": "Lazy Loading (DelayedViewItemsInitialization)",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "ee24f322-be7b-4f94-abf2-f65800e15769",
+        "name": "ListViewAndDetailView (master detail)",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "a3df8ccc-a6f0-4c3d-94d1-3b4ec2bbe50d",
+        "name": "Lookups",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "8602ce70-4198-4ecc-a808-b3e6c30d3e3e",
+        "name": "Popups",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "b4c2ef13-482b-4daa-b249-440a7f0802e1",
+        "name": "Property Editor Value Formatting",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    },
+    {
+        "id": "02ef00bd-f7e9-4a77-ba3c-518fba6dcfe2",
+        "name": "Text Nofitications (ShowMessage)",
+        "parentId": "886c0fd5-cf33-4615-bde3-e3ffa112bcbd",
+        "parentName": "Views & View Items & Property Editors"
+    }
+]
