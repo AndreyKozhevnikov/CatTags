@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Set tags
 // @namespace    http://tampermonkey.net/
-// @version      0.1.5
+// @version      0.1.6
 // @description  Set and search CAT Tags
 // @author       AndreyK
 // @match        https://isc.devexpress.com/internal/ticket/details/*
@@ -19,7 +19,8 @@ function createButtons() {
     ['a3b9686a-ddd2-4ee4-9fa9-f3b40e4f00a9', 'Grid List Editors', '886c0fd5-cf33-4615-bde3-e3ffa112bcbd'],
     ['9d620208-6e17-43a8-b4ac-41050b388efc','Criteria Editors','886c0fd5-cf33-4615-bde3-e3ffa112bcbd'],
     ['e72485bb-7aa7-46e7-a2e7-20c2cc62c0c2','DashboardViews','886c0fd5-cf33-4615-bde3-e3ffa112bcbd'],
-    ['29434ccb-511a-4bb9-a81d-a17cf950a9d4','Enum Editors','886c0fd5-cf33-4615-bde3-e3ffa112bcbd']
+    ['29434ccb-511a-4bb9-a81d-a17cf950a9d4','Enum Editors','886c0fd5-cf33-4615-bde3-e3ffa112bcbd'],
+    ['ad5d5471-063b-4e7e-85e5-7db12480c416','Image Editors','886c0fd5-cf33-4615-bde3-e3ffa112bcbd']
   ];
   let tabElement = document.getElementsByClassName('editable-properties')[1];
   lstPopular.forEach(x => {
