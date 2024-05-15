@@ -48,7 +48,8 @@ public class CustomBlazorController :ViewController {
             var f =os.GetObject( ftrs[i]);
             os.Delete(f);
         }
-        ((XPObjectSpace)os).Session.PurgeDeletedObjects();
+        os.CommitChanges();
+        var res= ((XPObjectSpace)os).Session.PurgeDeletedObjects();
         ((XPObjectSpace)os).Session.CommitTransaction();
 
     }
