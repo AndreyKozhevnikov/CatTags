@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Set tags
 // @namespace    http://tampermonkey.net/
-// @version      0.1.4
+// @version      0.1.5
 // @description  Set and search CAT Tags
 // @author       AndreyK
 // @match        https://isc.devexpress.com/internal/ticket/details/*
@@ -16,7 +16,10 @@ function createButtons() {
     ['de23fdf2-0009-4057-92dc-30d5eb9bee19', 'Splash, Loading Panel', '64e07510-1788-4206-b6dc-b5f543a35137'],
     ['8602ce70-4198-4ecc-a808-b3e6c30d3e3e', 'Popups', '886c0fd5-cf33-4615-bde3-e3ffa112bcbd'],
     ['a3df8ccc-a6f0-4c3d-94d1-3b4ec2bbe50d', 'Lookups', '886c0fd5-cf33-4615-bde3-e3ffa112bcbd'],
-    ['a3b9686a-ddd2-4ee4-9fa9-f3b40e4f00a9', 'Grid List Editors', '886c0fd5-cf33-4615-bde3-e3ffa112bcbd']
+    ['a3b9686a-ddd2-4ee4-9fa9-f3b40e4f00a9', 'Grid List Editors', '886c0fd5-cf33-4615-bde3-e3ffa112bcbd'],
+    ['9d620208-6e17-43a8-b4ac-41050b388efc','Criteria Editors','886c0fd5-cf33-4615-bde3-e3ffa112bcbd'],
+    ['e72485bb-7aa7-46e7-a2e7-20c2cc62c0c2','DashboardViews','886c0fd5-cf33-4615-bde3-e3ffa112bcbd'],
+    ['29434ccb-511a-4bb9-a81d-a17cf950a9d4','Enum Editors','886c0fd5-cf33-4615-bde3-e3ffa112bcbd']
   ];
   let tabElement = document.getElementsByClassName('editable-properties')[1];
   lstPopular.forEach(x => {
