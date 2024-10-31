@@ -19,15 +19,18 @@ using System.IO;
 using System.ComponentModel;
 using Newtonsoft.Json;
 using DevExpress.ExpressApp.Xpo;
+using DXCatBase.Module.BusinessObjects;
+using DevExpress.XtraRichEdit.Import.Html;
+using System.Xml.Linq;
 
 namespace dxTestSolution.Blazor.Server.Controllers;
 //public class CustomBlazorController : ObjectViewController<DetailView,Contact> {
 
 
-public class CustomBlazorController :ViewController {
-    public CustomBlazorController() {
+public class CustomController :ViewController {
+    public CustomController() {
         var myAction1 = new SimpleAction(this, "MyImport", PredefinedCategory.Edit);
-        myAction1.Execute += MyAction1_Execute;
+        myAction1.Execute += MyImport_Execute;
 
         var myAction2 = new SimpleAction(this, "MyExport", PredefinedCategory.Edit);
         myAction2.Execute += MyAction2_Execute;
@@ -35,40 +38,85 @@ public class CustomBlazorController :ViewController {
 
         var removeAction = new SimpleAction(this, "remove features", PredefinedCategory.Edit);
         removeAction.Execute += RemoveAction_Execute;
+
+
+        var importWithAPIAction = new PopupWindowShowAction(this, "import with API", PredefinedCategory.Edit);
+        importWithAPIAction.TargetViewType = ViewType.DetailView;
+        importWithAPIAction.TargetObjectType = typeof(Category);
+        importWithAPIAction.CustomizePopupWindowParams += ImportWithAPIAction_CustomizePopupWindowParams;
+        importWithAPIAction.Execute += ImportWithAPIAction_Execute;
         // var mypopAction1 = new PopupWindowShowAction(this, "MyBlazorPopupAction1", null);
         // mypopAction1.CustomizePopupWindowParams += MyAction1_CustomizePopupWindowParams;
 
     }
+
+    private void ImportWithAPIAction_Execute(object sender, PopupWindowShowActionExecuteEventArgs e) {
+
+
+        var rawData = ((DataFromApiHolder)e.PopupWindowView.CurrentObject).Data;
+
+        var response = JsonConvert.DeserializeObject<List<FeatureFromAPI>>(rawData);
+
+        var os = Application.CreateObjectSpace<Feature>();
+        var parentCategory = os.GetObject((Category)e.CurrentObject);
+        foreach(var apiFeature in response) {
+            if(apiFeature.text == "General")
+                continue;
+
+
+            Feature feature = os.CreateObject<Feature>();
+            feature.Oid = Guid.Parse(apiFeature.id);
+            feature.Name = apiFeature.text;
+            parentCategory.Features.Add(feature);
+        }
+        os.CommitChanges();
+        //var adResponse = JsonSerializer.de<AnswerDeskResponse>(rawData);
+    }
+
+    private void ImportWithAPIAction_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e) {
+        var os = Application.CreateObjectSpace<DataFromApiHolder>();
+        var holder = os.CreateObject<DataFromApiHolder>();
+
+        var category = (Category)View.CurrentObject;
+        var id = category.Oid;
+        var targetURL = "https://int.devexpress.com/supportstat/TicketCategories/CaTGetLinkedFeatures?supportTeam=9cf2ac98-e331-446e-a0c4-c8e22a5cd32a&control=" + id;
+
+        holder.URL = targetURL;
+        var detailView = Application.CreateDetailView(os, holder);
+        e.View = detailView;
+    }
+
+
 
     private void RemoveAction_Execute(object sender, SimpleActionExecuteEventArgs e) {
         var os = Application.CreateObjectSpace(typeof(Feature));
         var category = View.SelectedObjects[0] as Category;
         var ftrs = category.Features.ToList();
         for(int i = ftrs.Count - 1; i >= 0; i--) {
-            var f =os.GetObject( ftrs[i]);
+            var f = os.GetObject(ftrs[i]);
             os.Delete(f);
         }
         os.CommitChanges();
-        var res= ((XPObjectSpace)os).Session.PurgeDeletedObjects();
+        var res = ((XPObjectSpace)os).Session.PurgeDeletedObjects();
         ((XPObjectSpace)os).Session.CommitTransaction();
 
     }
 
     private void MyAction2_Execute(object sender, SimpleActionExecuteEventArgs e) {
         var os = Application.CreateObjectSpace(typeof(Feature));
-        var lst = os.GetObjects<Feature>().ToList().OrderBy(x=>x.ParentCategory.Oid);
+        var lst = os.GetObjects<Feature>().ToList().OrderBy(x => x.ParentCategory.Oid);
 
-        var resSt=new List<string>();
-        foreach (var feat in lst) {
+        var resSt = new List<string>();
+        foreach(var feat in lst) {
             if(feat.Name.ToLower().Contains("obsolete"))
                 continue;
-            var st=string.Format("['{0}','{1}','{2}']",feat.Oid.ToString(),feat.Name,feat.ParentCategory.Oid);
+            var st = string.Format("['{0}','{1}','{2}']", feat.Oid.ToString(), feat.Name, feat.ParentCategory.Oid);
             resSt.Add(st);
         }
-        var resultString =string.Format("[{0}]", string.Join(",", resSt));
+        var resultString = string.Format("[{0}]", string.Join(",", resSt));
     }
 
-    private void MyAction1_Execute(object sender, SimpleActionExecuteEventArgs e) {
+    private void MyImport_Execute(object sender, SimpleActionExecuteEventArgs e) {
         var os = Application.CreateObjectSpace(typeof(Category));
 
 
@@ -87,8 +135,8 @@ public class CustomBlazorController :ViewController {
 
         Dictionary<string, Category> allDict = new Dictionary<string, Category>();
 
-        var existingParents=os.GetObjects<Category>().ToList(); 
-        foreach (var parent in existingParents) {
+        var existingParents = os.GetObjects<Category>().ToList();
+        foreach(var parent in existingParents) {
             allDict.Add(parent.Oid.ToString(), parent);
         }
 
@@ -110,13 +158,13 @@ public class CustomBlazorController :ViewController {
                 parentCategory.Name = parentName;
                 allDict[parentId] = parentCategory;
             } else {
-               // var ftrs = parentCategory.Features.ToList();
-               // for(int i=ftrs.Count-1; i>=0; i--) { 
-               //     var f = ftrs[i];
-               //     os.Delete(f);
-               // }
-               //((XPObjectSpace)os).Session.PurgeDeletedObjects();
-               //((XPObjectSpace)os).Session.CommitTransaction();
+                // var ftrs = parentCategory.Features.ToList();
+                // for(int i=ftrs.Count-1; i>=0; i--) { 
+                //     var f = ftrs[i];
+                //     os.Delete(f);
+                // }
+                //((XPObjectSpace)os).Session.PurgeDeletedObjects();
+                //((XPObjectSpace)os).Session.CommitTransaction();
             }
             bool isFeatureExists = parentCategory.Features.Where(x => x.Oid == Guid.Parse(id)).Any();
             if(isFeatureExists) {
