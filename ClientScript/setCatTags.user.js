@@ -70,11 +70,58 @@ function createSearchBox() {
     newLink.addEventListener('click', () => {
         createTextFromTicket();
     });
-
     newLi.appendChild(newLink);
     tabElement.appendChild(newLi);
-}
 
+
+    let divTagResult = document.createElement('div');
+    divTagResult.id = 'tagresult';
+
+    let newTagLi=document.createElement('li');
+    let newTagLink=document.createElement('a');
+    newTagLink.innerHTML ='evaluate ticket';
+    newTagLink.addEventListener('click', () => {
+        let txt= evaluateTicket();
+    });
+    newTagLi.appendChild(newTagLink);
+    divTagResult.appendChild(newTagLi);
+
+
+
+    tabElement.appendChild(divTagResult);
+}
+async function evaluateTicket(){
+    let platformElement = document.getElementById('property-PlatformedProductId')
+    let viewModel = ko.contextFor(platformElement)
+    let subject= viewModel.$root.subject.value()
+
+    let question = viewModel.$root.question().description()
+
+
+
+
+
+
+
+
+
+
+    let myRes={Subject:subject,Question:question,FeatureId:null,TicketId:null}
+
+    console.log('ready to send for evaluate');
+    // console.log(JSON.stringify(myRes));
+    var response= await fetch("https://localhost:44319/api/EvaluateNewText", {
+        method: "POST",
+        body: JSON.stringify(myRes),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+    let data = await response.text();
+    console.dir(data);
+
+    console.log('sent for evaluate');
+}
 function createTextFromTicket(){
     let platformElement = document.getElementById('property-PlatformedProductId')
     let viewModel = ko.contextFor(platformElement)
@@ -98,13 +145,14 @@ function createTextFromTicket(){
     let myRes={Subject:subject,Question:question,FeatureId:featureId,TicketId:ticketId}
 
     console.log('ready to send');
-    fetch("https://localhost:44319/api/CustomEnterTicket", {
-        method: "POST",
-        body: JSON.stringify(myRes),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-    });
+    console.log(JSON.stringify(myRes));
+    // fetch("https://localhost:44319/api/CustomEnterTicket", {
+    //     method: "POST",
+    //     body: JSON.stringify(myRes),
+    //     headers: {
+    //         "Content-type": "application/json; charset=UTF-8"
+    //     }
+    // });
 
     console.log('sent');
     // console.log(myRes);
@@ -189,7 +237,7 @@ $(document).ready(function () {
 
     createButtons();
     createSearchBox();
-   // createTextFromTicket();
+    //  createTextFromTicket();
 });
 //console.log('test123');
 
