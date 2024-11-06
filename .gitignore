@@ -49,6 +49,7 @@ createGit.bat
 *.log
 *.scc
 *.bak
+*.env
 
 # Visual C++ cache files
 ipch/

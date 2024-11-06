@@ -8,15 +8,14 @@ using DevExpress.Data.Filtering;
 using DevExpress.Persistent.Base;
 using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.ExpressApp.Editors;
 using DevExpress.Persistent.Base.General;
 using DevExpress.ExpressApp.SystemModule;
 
 namespace dxTestSolution.Module.BusinessObjects {
-     [DefaultClassOptions]
-     [DefaultProperty("Subject")]
+    [DefaultClassOptions]
+    [DefaultProperty("Subject")]
     public class Feature :XPCustomObject, ITreeNode {
         public Feature(Session session)
             : base(session) {
@@ -54,6 +53,14 @@ namespace dxTestSolution.Module.BusinessObjects {
         public ITreeNode Parent => ParentCategory;
 
         public IBindingList Children => new BindingList<object>();
+
+        [Association]
+        public XPCollection<FeaturePrompt> Prompts {
+            get {
+                return GetCollection<FeaturePrompt>(nameof(Prompts));
+            }
+        }
+
     }
 
 }
