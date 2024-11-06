@@ -23,8 +23,11 @@ namespace dxTestSolution.Module.BusinessObjects {
         public TicketData(Session session)
             : base(session) {
         }
-       
-     
+        public override void AfterConstruction() {
+            base.AfterConstruction();
+            this.EnteredDate = DateTime.Now;
+        }
+
         string _firstName;
         [Size(SizeAttribute.Unlimited)]
         public string Subject {
@@ -63,15 +66,15 @@ namespace dxTestSolution.Module.BusinessObjects {
                 SetPropertyValue(nameof(TicketId), ref _ticketId, value);
             }
         }
-        // DateTime _birthDate;
-        // public DateTime BirthDate {
-        // get {
-        // return _birthDate;
-        // }
-        // set {
-        // SetPropertyValue(nameof(BirthDate), ref _birthDate, value);
-        // }
-        // }	
+        DateTime _enteredDate;
+        public DateTime EnteredDate {
+            get {
+                return _enteredDate;
+            }
+            set {
+                SetPropertyValue(nameof(EnteredDate), ref _enteredDate, value);
+            }
+        }
         //office#3		
         //[Association("Contact-Tasks")]
         //public XPCollection<MyTask> Tasks {

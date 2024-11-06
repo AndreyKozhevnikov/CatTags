@@ -41,7 +41,10 @@ public class Startup {
 
             builder.ConfigureOptions(options => {
                 // Make your business objects available in the Web API and generate the GET, POST, PUT, and DELETE HTTP methods for it.
-                 options.BusinessObject<TicketData>();
+                 options.BusinessObject<TicketData>().ConfigureEntityType(b => {
+                     // Ignore this class's property.
+                     b.IgnoreProperty(o => o.EnteredDate);
+                 });
             });
 
             builder.Modules
