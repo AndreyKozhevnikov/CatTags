@@ -5,6 +5,7 @@ using DevExpress.ExpressApp.WebApi.Services;
 using Microsoft.AspNetCore.OData;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.ApplicationBuilder;
+using dxTestSolution.Module.BusinessObjects;
 
 namespace DXCatBase.WebApi;
 
@@ -18,13 +19,29 @@ public class Startup {
     // This method gets called by the runtime. Use this method to add services to the container.
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services) {
+        services.AddCors(options => {
+            //options.AddPolicy(
+            //    "AllowAllOrigins",
+            //    builder => builder
+            //                    .AllowAnyOrigin()
+            //                    .AllowAnyHeader()
+            //                    .AllowAnyMethod()
+            //                    .AllowCredentials());
+            options.AddPolicy("MyAllowSpecificOrigins",
+                         policy => {
+                             policy.WithOrigins("https://localhost:44319", "https://isc.devexpress.com")
+                                                 .AllowAnyHeader()
+                                                 .AllowAnyMethod();
+                         });
 
+            options.DefaultPolicyName = "AllowAllOrigins";
+        });
         services.AddXafWebApi(builder => {
             builder.AddXpoServices();
 
             builder.ConfigureOptions(options => {
                 // Make your business objects available in the Web API and generate the GET, POST, PUT, and DELETE HTTP methods for it.
-                // options.BusinessObject<YourBusinessObject>();
+                 options.BusinessObject<TicketData>();
             });
 
             builder.Modules
@@ -101,6 +118,7 @@ public class Startup {
             // The default HSTS value is 30 days. To change this for production scenarios, see: https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
+        app.UseCors("MyAllowSpecificOrigins");
         app.UseHttpsRedirection();
         app.UseRequestLocalization();
         app.UseStaticFiles();
