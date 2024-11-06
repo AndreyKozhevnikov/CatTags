@@ -84,6 +84,13 @@ function createTextFromTicket(){
 
     let l2 = document.getElementById('FeatureId')
     let viewModel2 = ko.contextFor(l2)
+
+    let featuresCount=viewModel2.$data.ticketField.selectedValues().length;
+
+    if(featuresCount!=1)
+        return;
+
+
     let featureId=viewModel2.$data.ticketField.selectedValues()[0]
 
 
@@ -91,7 +98,7 @@ function createTextFromTicket(){
     let myRes={Subject:subject,Question:question,FeatureId:featureId,TicketId:ticketId}
 
     console.log('ready to send');
-    fetch("https://localhost:44319/api/odata/TicketData", {
+    fetch("https://localhost:44319/api/CustomEnterTicket", {
         method: "POST",
         body: JSON.stringify(myRes),
         headers: {
