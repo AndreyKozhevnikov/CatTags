@@ -13,7 +13,7 @@
 
 
 
-function createButtons() {
+function createPopularTagsButtons() {
 
     let lstPopular = [
         ['de23fdf2-0009-4057-92dc-30d5eb9bee19', 'Splash, Loading Panel', '64e07510-1788-4206-b6dc-b5f543a35137'],
@@ -24,12 +24,14 @@ function createButtons() {
     ];
     let tabElement = document.getElementsByClassName('editable-properties')[1];
     lstPopular.forEach(x => {
+
+        let tag={tagName:x[1],tagId:x[0],parentTagId:x[2]};
         let newLi = document.createElement('li');
         let newLink = document.createElement('a');
         newLink.innerHTML = x[1];
 
         newLink.addEventListener('click', () => {
-            SetFeature([x[0], null, x[2]]);
+            SetFeature(tag);
         });
 
         newLi.appendChild(newLink);
@@ -63,6 +65,47 @@ function createSearchBox() {
     tabElement.appendChild(divResult);
 
 
+
+}
+
+function myKeyUp() {
+    // Declare variables
+    let input, filter, divResult;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    let lst;
+    if (filter.length > 1) {
+        if (lst == null) {
+            lst = getAllFeatures();
+        }
+        if (divResult == null) {
+            divResult = document.getElementById('divresult');
+        }
+        divResult.innerHTML = "";
+        let result = lst.filter(x => x[1].toUpperCase().includes(filter));
+        result.forEach(x => {
+            console.log(x[1]);
+            let tag={tagName:x[1],tagId:x[0],parentTagId:x[2]};
+            let newLi = document.createElement('li');
+            let newLink = document.createElement('a');
+            newLink.innerHTML = tag.tagName;
+
+            newLink.addEventListener('click', () => {
+                SetFeature(tag);
+            });
+            newLi.appendChild(newLink);
+            divResult.appendChild(newLi);
+        }
+                      );
+    }
+
+    console.log(filter);
+
+    return;
+}
+
+function createAIElements(){
+    let tabElement = document.getElementsByClassName('editable-properties')[1];
     let newLi=document.createElement('li');
     let newLink=document.createElement('a');
     newLink.innerHTML ='create txt';
@@ -85,26 +128,16 @@ function createSearchBox() {
     });
     newTagLi.appendChild(newTagLink);
     divTagResult.appendChild(newTagLi);
-
-
-
     tabElement.appendChild(divTagResult);
 }
+
+
 async function evaluateTicket(){
     let platformElement = document.getElementById('property-PlatformedProductId')
     let viewModel = ko.contextFor(platformElement)
     let subject= viewModel.$root.subject.value()
 
     let question = viewModel.$root.question().description()
-
-
-
-
-
-
-
-
-
 
     let myRes={Subject:subject,Question:question,FeatureId:null,TicketId:null}
 
@@ -117,8 +150,27 @@ async function evaluateTicket(){
             "Content-type": "application/json; charset=UTF-8"
         }
     });
-    let data = await response.text();
-    console.dir(data);
+    let tagJson = await response.text();
+    let tags=JSON.parse(tagJson);
+    //   console.dir(tagJson);
+
+    // for(let tag in tags){
+
+    //     console.dir(tag);
+    // }
+    tags.forEach((tag,i,a)=>{
+        console.dir(tag)
+         let newLi = document.createElement('li');
+            let newLink = document.createElement('a');
+            newLink.innerHTML = tag.tagName;
+
+            newLink.addEventListener('click', () => {
+                SetFeature(tag);
+            });
+            newLi.appendChild(newLink);
+            divResult.appendChild(newLi);
+
+                            });
 
     console.log('sent for evaluate');
 }
@@ -184,49 +236,18 @@ function getData() {
 }
 
 
-function myKeyUp() {
-    // Declare variables
-    let input, filter, divResult;
-    input = document.getElementById('myInput');
-    filter = input.value.toUpperCase();
-    let lst;
-    if (filter.length > 1) {
-        if (lst == null) {
-            lst = getAllFeatures();
-        }
-        if (divResult == null) {
-            divResult = document.getElementById('divresult');
-        }
-        divResult.innerHTML = "";
-        let result = lst.filter(x => x[1].toUpperCase().includes(filter));
-        result.forEach(x => {
-            console.log(x[1]);
-            let newLi = document.createElement('li');
-            let newLink = document.createElement('a');
-            newLink.innerHTML = x[1];
 
-            newLink.addEventListener('click', () => {
-                SetFeature(x);
-            });
-            newLi.appendChild(newLink);
-            divResult.appendChild(newLi);
-        }
-                      );
-    }
+function SetFeature(tagData) {
 
-    console.log(filter);
-
-    return;
-}
-function SetFeature(featureData) {
+    console.dir(tagData);
     let l = document.getElementById('ControlId')
     let viewModel = ko.contextFor(l);
-    viewModel.$data.ticketField.selectedValues(featureData[2]);
+    viewModel.$data.ticketField.selectedValues(tagData.parentTagId);
 
 
     let l2 = document.getElementById('FeatureId')
     let viewModel2 = ko.contextFor(l2);
-    viewModel2.$data.ticketField.selectedValues(featureData[0])
+    viewModel2.$data.ticketField.selectedValues(''+ tagData.tagId+'')
 
     var bts = document.getElementById('update-actions')
     var vm = ko.contextFor(bts)
@@ -235,8 +256,9 @@ function SetFeature(featureData) {
 
 $(document).ready(function () {
 
-    createButtons();
+    createPopularTagsButtons();
     createSearchBox();
+   // createAIElements();
     //  createTextFromTicket();
 });
 //console.log('test123');
