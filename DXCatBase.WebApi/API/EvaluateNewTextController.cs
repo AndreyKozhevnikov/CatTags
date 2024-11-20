@@ -3,6 +3,7 @@ using DXCatBase.Module.BusinessObjects;
 using DXCatBase.Module.Controllers;
 using dxTestSolution.Module.BusinessObjects;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace DXCatBase.WebApi.API;
 [Route("api/[controller]")]
@@ -33,6 +34,9 @@ public class EvaluateNewTextController :ControllerBase {
         var resultText = result.Value.Content[0].Text;
 
 
+        var res = GetAIResults(resultText);
+
+
 
 
         return resultText;
@@ -41,7 +45,21 @@ public class EvaluateNewTextController :ControllerBase {
 
 
     public List<TagAIResult> GetAIResults(string input) {
-        return null;
+        List<TagAIResult> tagAIList = new List<TagAIResult>();
+
+        try {
+            tagAIList = JsonConvert.DeserializeObject<List<TagAIResult>>(input);
+        }
+        catch(Exception e) {
+            using(StreamWriter outputFile = new StreamWriter("myerrors.log")) {
+             outputFile.WriteLine(e.Message);
+             outputFile.WriteLine("=====");
+             outputFile.WriteLine(input);
+
+            }
+        }
+        return tagAIList;
+
     }
 }
 
