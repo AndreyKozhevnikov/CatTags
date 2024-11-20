@@ -22,7 +22,7 @@ public class EvaluateNewTextControllerTests {
     {""tagName"":""Built-in Permissions Setup/Troubleshooting"",""tagId"":""e8bb71e2-e5ac-417c-9cc6-3a69f2631eb6"",""percentage"":0}
 ]";
         //act
-        var cnt = new EvaluateNewTextController(null);
+        var cnt = new EvaluateTextHelper();
         var res = cnt.GetAIResults(input);
         //assert
         Assert.AreEqual(10, res.Count);
@@ -38,7 +38,7 @@ public class EvaluateNewTextControllerTests {
         parents["222"] = "333";
         parents["123"] = "222";
         //act
-        var cnt = new EvaluateNewTextController(null);
+        var cnt = new EvaluateTextHelper();
         cnt.PopulateParents(tags, parents);
         //assert
         
