@@ -118,7 +118,7 @@ function createAIElements(){
 
 
     let divTagResult = document.createElement('div');
-    divTagResult.id = 'tagresult';
+    divTagResult.id = 'divTagResults';
 
     let newTagLi=document.createElement('li');
     let newTagLink=document.createElement('a');
@@ -133,6 +133,7 @@ function createAIElements(){
 
 
 async function evaluateTicket(){
+        let divResult;
     let platformElement = document.getElementById('property-PlatformedProductId')
     let viewModel = ko.contextFor(platformElement)
     let subject= viewModel.$root.subject.value()
@@ -150,14 +151,17 @@ async function evaluateTicket(){
             "Content-type": "application/json; charset=UTF-8"
         }
     });
+
+    divResult = document.getElementById('divTagResults');
+    let separatorLi= document.createElement('li');
+    separatorLi.innerHTML='----------------';
+    divResult.appendChild(separatorLi);
+
+
     let tagJson = await response.text();
+
+    console.dir(tagJson);
     let tags=JSON.parse(tagJson);
-    //   console.dir(tagJson);
-
-    // for(let tag in tags){
-
-    //     console.dir(tag);
-    // }
     tags.forEach((tag,i,a)=>{
         console.dir(tag)
          let newLi = document.createElement('li');
@@ -258,7 +262,7 @@ $(document).ready(function () {
 
     createPopularTagsButtons();
     createSearchBox();
-   // createAIElements();
+    createAIElements();
     //  createTextFromTicket();
 });
 //console.log('test123');
