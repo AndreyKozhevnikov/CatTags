@@ -28,20 +28,43 @@ public class EvaluateNewTextControllerTests {
         Assert.AreEqual(10, res.Count);
         Assert.AreEqual(80, res[3].percentage);
     }
+    [Test]
+    public void GetPreparedJSONTest() {
+        //arrange
+        var input = @"[{""tagName"":""Custom logic within View or Controller"",""tagId"":""222"",""percentage"":60},    {""tagName"":""TabbedMDI"",""tagId"":""333"",""percentage"":70},    {""tagName"":""Speed"",""tagId"":""111"",""percentage"":80}
+        ]";
+
+        var parents = new Dictionary<string, string>();
+        parents["222"] = "222p";
+        parents["111"] = "111p";
+        parents["333"] = "333p";
+        //act
+        var cnt = new EvaluateTextHelper();
+        var res = cnt.GetPreparedJSON(input, parents);
+        //assert
+        var expected = @"[
+{""tagName"":""Speed"",""tagId"":""111"",""parentTagId"":""111p"",""percentage"":80},
+{""tagName"":""TabbedMDI"",""tagId"":""333"",""parentTagId"":""333p"",""percentage"":70},
+{""tagName"":""Custom logic within View or Controller"",""tagId"":""222"",""parentTagId"":""222p"",""percentage"":60}
+]";
+
+        Assert.AreEqual(expected.Replace("\r\n",null), res);
+
+    }
 
     [Test]
     public void PopulateParents() {
         //arrange
-        var tags=new List<TagAIResult>();
+        var tags = new List<TagAIResult>();
         tags.Add(new TagAIResult() { tagName = "testTag", tagId = "123" });
-        var parents=new Dictionary<string, string>();
+        var parents = new Dictionary<string, string>();
         parents["222"] = "333";
         parents["123"] = "222";
         //act
         var cnt = new EvaluateTextHelper();
         cnt.PopulateParents(tags, parents);
         //assert
-        
+
         Assert.AreEqual("222", tags[0].parentTagId);
 
 
