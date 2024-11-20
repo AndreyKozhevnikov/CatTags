@@ -16,7 +16,7 @@ public class EvaluateTextHelper {
     public string GetPreparedJSON(string input, Dictionary<string, string> parents) {
         var res = GetAIResults(input);
         PopulateParents(res, parents);
-        res = res.OrderByDescending(x => x.percentage).ToList();
+        res = res.OrderByDescending(x => x.percentage).Take(3).ToList();
         var jsonToSend = JsonConvert.SerializeObject(res);
         return jsonToSend;
     }

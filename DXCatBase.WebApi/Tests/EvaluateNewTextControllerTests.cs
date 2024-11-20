@@ -52,6 +52,35 @@ public class EvaluateNewTextControllerTests {
 
     }
 
+
+    [Test]
+    public void GetPreparedJSONTest2() {
+        //arrange
+        var input = @"[{""tagName"":""Custom logic within View or Controller"",""tagId"":""222"",""percentage"":60},
+{""tagName"":""TabbedMDI"",""tagId"":""333"",""percentage"":70},
+{""tagName"":""Speed"",""tagId"":""111"",""percentage"":80},
+{""tagName"":""SomeSuperTag"",""tagId"":""444"",""percentage"":90}
+        ]";
+
+        var parents = new Dictionary<string, string>();
+        parents["222"] = "222p";
+        parents["111"] = "111p";
+        parents["333"] = "333p";
+        parents["444"] = "444p";
+        //act
+        var cnt = new EvaluateTextHelper();
+        var res = cnt.GetPreparedJSON(input, parents);
+        //assert
+        var expected = @"[
+{""tagName"":""SomeSuperTag"",""tagId"":""444"",""parentTagId"":""444p"",""percentage"":90},
+{""tagName"":""Speed"",""tagId"":""111"",""parentTagId"":""111p"",""percentage"":80},
+{""tagName"":""TabbedMDI"",""tagId"":""333"",""parentTagId"":""333p"",""percentage"":70}
+]";
+
+        Assert.AreEqual(expected.Replace("\r\n", null), res);
+
+    }
+
     [Test]
     public void PopulateParents() {
         //arrange
