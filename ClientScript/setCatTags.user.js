@@ -133,7 +133,7 @@ function createAIElements(){
 
 
 async function evaluateTicket(){
-        let divResult;
+    let divResult;
     let platformElement = document.getElementById('property-PlatformedProductId')
     let viewModel = ko.contextFor(platformElement)
     let subject= viewModel.$root.subject.value()
@@ -164,17 +164,17 @@ async function evaluateTicket(){
     let tags=JSON.parse(tagJson);
     tags.forEach((tag,i,a)=>{
         console.dir(tag)
-         let newLi = document.createElement('li');
-            let newLink = document.createElement('a');
-            newLink.innerHTML = tag.tagName;
+        let newLi = document.createElement('li');
+        let newLink = document.createElement('a');
+        newLink.innerHTML = tag.tagName + '  -  '+ tag.percentage + '%';
 
-            newLink.addEventListener('click', () => {
-                SetFeature(tag);
-            });
-            newLi.appendChild(newLink);
-            divResult.appendChild(newLi);
+        newLink.addEventListener('click', () => {
+            SetFeature(tag);
+        });
+        newLi.appendChild(newLink);
+        divResult.appendChild(newLi);
 
-                            });
+    });
 
     console.log('sent for evaluate');
 }
