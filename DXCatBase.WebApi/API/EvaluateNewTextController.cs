@@ -25,6 +25,10 @@ public class EvaluateNewTextController :ControllerBase {
             Prepare answer as a JSON string in the format <""tagName"":tagName,""tagId"":tagId,""percentage"":percentage>. 
             Don't wrap the result in '```json' - '```' strings";
         var tags = lst.Select(x => new { tagName = x.Feature.Name, prompt = x.Prompt, tagId = x.Feature.Oid });
+
+        Dictionary<string,string> parents=new Dictionary<string, string>();
+        lst.Select(x => parents[x.Feature.Oid.ToString()] = x.Feature.ParentCategory.Oid.ToString());
+
         var tagsJson = Newtonsoft.Json.JsonConvert.SerializeObject(tags);
         var newTicketText = Newtonsoft.Json.JsonConvert.SerializeObject(ticketStub);
 
@@ -32,17 +36,22 @@ public class EvaluateNewTextController :ControllerBase {
         var result = client.CompleteChat(intro, tagsJson, newTicketText);
 
         var resultText = result.Value.Content[0].Text;
-
-
         var res = GetAIResults(resultText);
+        res = PopulateParents(res,parents);
+        var jsonToSend = JsonConvert.SerializeObject(res);
 
 
-
-
-        return resultText;
+        return jsonToSend;
 
     }
 
+    public List<TagAIResult> PopulateParents(List<TagAIResult> tags,Dictionary<string,string> parents) {
+
+        foreach(var tag in tags) {
+            tag.parentTagId = parents[tag.tagId];
+        }
+        return tags;
+    }
 
     public List<TagAIResult> GetAIResults(string input) {
         List<TagAIResult> tagAIList = new List<TagAIResult>();

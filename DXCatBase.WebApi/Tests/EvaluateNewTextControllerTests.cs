@@ -1,4 +1,6 @@
-﻿using DXCatBase.WebApi.API;
+﻿using DXCatBase.Module.BusinessObjects;
+using DXCatBase.WebApi.API;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace DXCatBase.WebApi.Tests;
@@ -25,5 +27,23 @@ public class EvaluateNewTextControllerTests {
         //assert
         Assert.AreEqual(10, res.Count);
         Assert.AreEqual(80, res[3].percentage);
+    }
+
+    [Test]
+    public void PopulateParents() {
+        //arrange
+        var tags=new List<TagAIResult>();
+        tags.Add(new TagAIResult() { tagName = "testTag", tagId = "123" });
+        var parents=new Dictionary<string, string>();
+        parents["222"] = "333";
+        parents["123"] = "222";
+        //act
+        var cnt = new EvaluateNewTextController(null);
+        cnt.PopulateParents(tags, parents);
+        //assert
+        
+        Assert.AreEqual("222", tags[0].parentTagId);
+
+
     }
 }
