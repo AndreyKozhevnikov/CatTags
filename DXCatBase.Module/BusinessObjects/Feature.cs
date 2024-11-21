@@ -61,6 +61,23 @@ namespace dxTestSolution.Module.BusinessObjects {
             }
         }
 
+        public int TicketDataCount {
+            get {
+                return TicketData.Count;
+            }
+        }
+
+        private XPCollection<TicketData> noAssociation;
+        [CollectionOperationSet(AllowAdd = false, AllowRemove = false)]
+        public XPCollection<TicketData> TicketData {
+            get {
+                if(noAssociation == null) {
+                    noAssociation = new XPCollection<TicketData>(Session, CriteriaOperator.FromLambda<TicketData>(x => x.FeatureId == this.Oid.ToString()));
+                }
+                return noAssociation;
+            }
+        }
+
     }
 
 }

@@ -26,7 +26,7 @@ namespace DXCatBase.Module.Controllers {
             var generateFeaturesPrompts = new SimpleAction(this, "GenerateFeaturePrompts", PredefinedCategory.Edit);
             generateFeaturesPrompts.Execute += GenerateFeaturesPrompts_Execute;
 
-            var evaluateTicketText= new SimpleAction(this, "GetTicketPercentage", PredefinedCategory.Edit);
+            var evaluateTicketText= new SimpleAction(this, "CreateMainPrompt(del)", PredefinedCategory.Edit);
             evaluateTicketText.Execute += CreateMainPrompt_Execute;
 
         }
