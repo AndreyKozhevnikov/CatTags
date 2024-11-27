@@ -27,7 +27,8 @@ public class EvaluateTextHelper {
             tagAIList = JsonConvert.DeserializeObject<List<TagAIResult>>(input);
         }
         catch(Exception e) {
-            using(StreamWriter outputFile = new StreamWriter("myerrors.log")) {
+            var st = string.Format("myError{0}.log", DateTime.Now.ToString("dd-MM-yy_hh:mm"));
+            using(StreamWriter outputFile = new StreamWriter(st)) {
                 outputFile.WriteLine(e.Message);
                 outputFile.WriteLine("=====");
                 outputFile.WriteLine(input);
