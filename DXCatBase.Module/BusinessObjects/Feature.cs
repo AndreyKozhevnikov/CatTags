@@ -12,10 +12,12 @@ using DevExpress.Persistent.Validation;
 using DevExpress.ExpressApp.Editors;
 using DevExpress.Persistent.Base.General;
 using DevExpress.ExpressApp.SystemModule;
+using System.Diagnostics;
 
 namespace dxTestSolution.Module.BusinessObjects {
     [DefaultClassOptions]
     [DefaultProperty("Subject")]
+    [DebuggerDisplay("{Name} - {Oid}")]
     public class Feature :XPCustomObject, ITreeNode {
         public Feature(Session session)
             : base(session) {
