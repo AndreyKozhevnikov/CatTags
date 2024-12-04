@@ -18,9 +18,9 @@ using DevExpress.ExpressApp.SystemModule;
 using DXCatBase.Module.BusinessObjects;
 
 namespace dxTestSolution.Module.BusinessObjects {
-     [DefaultClassOptions]
-	  
-    public class TicketData : BaseObject { 
+    [DefaultClassOptions]
+
+    public class TicketData :BaseObject {
         public TicketData(Session session)
             : base(session) {
         }
@@ -56,6 +56,13 @@ namespace dxTestSolution.Module.BusinessObjects {
             }
             set {
                 SetPropertyValue(nameof(FeatureId), ref _featureId, value);
+            }
+        }
+
+        public Feature SelectedFeature {
+            get {
+                var f = this.Session.FindObject<Feature>(CriteriaOperator.FromLambda<Feature>(x => x.Oid.ToString() == FeatureId));
+                return f;
             }
         }
         string _ticketId;
