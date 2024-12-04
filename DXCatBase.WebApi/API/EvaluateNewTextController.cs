@@ -1,5 +1,6 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp.WebApi.Services;
+using DXCatBase.Module.BusinessObjects;
 using DXCatBase.Module.Controllers;
 using dxTestSolution.Module.BusinessObjects;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,7 @@ public class EvaluateNewTextController :ControllerBase {
         var intro = @"You will get several tags. For each tag there is a promt that describes whether a text fits to the tag. 
             Based on this info you need to determine in percentage how well each tag fits to the new text. 
             You need to evaluate all tags.
-            Prepare answer as a JSON string in the format <""tagName"":tagName,""tagId"":tagId,""percentage"":percentage>. 
+            Prepare answer as a JSON string in the format [{""tagName"":tagName,""tagId"":tagId,""percentage"":percentage},...]
             Write the response as plain JSON, without any enclosing markers such as json, ```json or ```.
             Respond only with a plain JSON string. Do not include any code fences (```), formatting markers, or additional text in the response
             don't change in any way the tagId from input. All these ids should be the same in the result as they were in input.
@@ -57,7 +58,21 @@ public class EvaluateNewTextController :ControllerBase {
         var resultText = result.Value.Content[0].Text;
         
         var tagsToSend= ticketHelper.GetTagsToSend(resultText, parents);
-        ///TODO!!! populate the TicketData.SuggestedFeatures collection and save
+     
+        foreach(var tag in tagsToSend) {
+            var featureResult = os.CreateObject<FeaturePercentResult>();
+
+            featureResult.Feature = os.GetObjectByKey<Feature>(Guid.Parse(tag.tagId));
+            featureResult.Percentage = tag.percentage;
+
+            featureResult.AssignedTicket = ticketData;
+            featureResult.EnteredDate = DateTime.Now;
+
+
+        }
+        os.CommitChanges();
+
+
         var jsonToSend = JsonConvert.SerializeObject(tagsToSend);
        
 
