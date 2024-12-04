@@ -31,7 +31,7 @@ function createPopularTagsButtons() {
         newLink.innerHTML = x[1];
 
         newLink.addEventListener('click', () => {
-            SetFeature(tag);
+           
         });
 
         newLi.appendChild(newLink);
@@ -143,6 +143,8 @@ async function evaluateTicket(){
     let myRes=getTicketData();
 
     console.log('ready to send for evaluate');
+    window.friendlyTicketId = myRes.TicketId;
+    console.log('ticketid - ' + window.friendlyTicketId);
     // console.log(JSON.stringify(myRes));
     let response= await fetch("https://localhost:44319/api/EvaluateNewText", {
         method: "POST",
@@ -151,7 +153,7 @@ async function evaluateTicket(){
             "Content-type": "application/json; charset=UTF-8"
         }
     });
-
+    
     divResult = document.getElementById('divTagResults');
     let separatorLi= document.createElement('li');
     separatorLi.innerHTML='----------------';
@@ -169,7 +171,7 @@ async function evaluateTicket(){
         newLink.innerHTML = tag.tagName + '  -  '+ tag.percentage + '%';
 
         newLink.addEventListener('click', () => {
-            SetFeature(tag);
+            SetFeature(tag,true);
         });
         newLi.appendChild(newLink);
         divResult.appendChild(newLi);
@@ -180,15 +182,9 @@ async function evaluateTicket(){
     let missLink= document.createElement('a');
     missLink.innerHTML="tag is missed";
     missLink.addEventListener('click', () => {
-        let promptRes={}
-
-        fetch("https://localhost:44319/api/GetPromptResult", {
-            method: "POST",
-            body:JSON.stringify(promptRes),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        });
+        let featureId = getFeatureId();
+        let myRes={FeatureId:featureId,TicketId:window.friendlyTicketId}
+        sendTicketData(myRes);
     });
     missLi.appendChild(missLink);
     divResult.appendChild(missLi)
@@ -197,16 +193,33 @@ async function evaluateTicket(){
     console.log('sent for evaluate');
 }
 
-async function  test(){
+// async function  test(){
 
-    let myRes={PromptId:"BE9D9216-CC94-4A22-B93B-845700FF5514",Result:"Miss"}
-    let response= await fetch("https://localhost:44319/api/GetPromptResult", {
-        method: "POST",
-        body:JSON.stringify(myRes),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-    });
+//     let myRes={PromptId:"BE9D9216-CC94-4A22-B93B-845700FF5514",Result:"Miss"}
+//     let response= await fetch("https://localhost:44319/api/GetPromptResult", {
+//         method: "POST",
+//         body:JSON.stringify(myRes),
+//         headers: {
+//             "Content-type": "application/json; charset=UTF-8"
+//         }
+//     });
+// }
+
+
+function getFeatureId(){
+    let l2 = document.getElementById('FeatureId')
+    let viewModel2 = ko.contextFor(l2)
+
+    let featuresCount=viewModel2.$data.ticketField.selectedValues().length;
+
+   
+
+
+    let featureId="000";
+    if(featuresCount==1){
+     featureId=   viewModel2.$data.ticketField.selectedValues()[0]
+    }
+    return featureId;
 }
 
 function getTicketData(){
@@ -216,16 +229,7 @@ function getTicketData(){
 
     let question = viewModel.$root.question().description()
 
-    let l2 = document.getElementById('FeatureId')
-    let viewModel2 = ko.contextFor(l2)
-
-    let featuresCount=viewModel2.$data.ticketField.selectedValues().length;
-
-    if(featuresCount!=1)
-        return;
-
-
-    let featureId=viewModel2.$data.ticketField.selectedValues()[0]
+    let featureId = getFeatureId();
 
 
     let ticketId=viewModel.$root.friendlyId()
@@ -236,20 +240,25 @@ function getTicketData(){
 function createTextFromTicket(){
    let ticketData=getTicketData();
 
+   if(ticketData.FeatureId!="000"){
+    return;
+   }
     console.log('ready to send');
-    console.log(JSON.stringify(myRes));
-    // fetch("https://localhost:44319/api/CustomEnterTicket", {
-    //     method: "POST",
-    //     body: JSON.stringify(ticketData),
-    //     headers: {
-    //         "Content-type": "application/json; charset=UTF-8"
-    //     }
-    // });
-
+  //  console.log(JSON.stringify(myRes));
+  
+    sendTicketData(ticketData);
     console.log('sent');
     // console.log(myRes);
+}
 
-
+function sendTicketData(ticketData){
+    fetch("https://localhost:44319/api/CustomEnterTicket", {
+        method: "POST",
+        body: JSON.stringify(ticketData),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
 }
 
 function getData() {
@@ -277,7 +286,7 @@ function getData() {
 
 
 
-function SetFeature(tagData) {
+function SetFeature(tagData, sendData=false) {
 
     console.dir(tagData);
     let l = document.getElementById('ControlId')
@@ -292,6 +301,11 @@ function SetFeature(tagData) {
     var bts = document.getElementById('update-actions')
     var vm = ko.contextFor(bts)
     vm.$rawData.saveTicketChangesClick()
+
+    if(sendData){
+        let myRes={FeatureId:tagData.tagId,TicketId:window.friendlyTicketId}
+        sendTicketData(myRes);
+    }
 }
 
 $(document).ready(function () {

@@ -42,6 +42,8 @@ public class EvaluateNewTextController :ControllerBase {
             Write the response as plain JSON, without any enclosing markers such as json, ```json or ```.
             Respond only with a plain JSON string. Do not include any code fences (```), formatting markers, or additional text in the response
             don't change in any way the tagId from input. All these ids should be the same in the result as they were in input.
+Don't shorten any given id. Don't change them in any way. 
+In your response, return all IDs (tagId) exactly as they are, without modifying or truncating them
 
 ";
         var tags = lst.Select(x => new { tagName = x.Feature.Name, prompt = x.Prompt, tagId = x.Feature.Oid });
