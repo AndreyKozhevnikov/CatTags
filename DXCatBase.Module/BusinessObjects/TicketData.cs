@@ -15,6 +15,7 @@ using DevExpress.ExpressApp.Editors;
 using System.Diagnostics;
 using DevExpress.Persistent.Base.General;
 using DevExpress.ExpressApp.SystemModule;
+using DXCatBase.Module.BusinessObjects;
 
 namespace dxTestSolution.Module.BusinessObjects {
      [DefaultClassOptions]
@@ -73,6 +74,13 @@ namespace dxTestSolution.Module.BusinessObjects {
             }
             set {
                 SetPropertyValue(nameof(EnteredDate), ref _enteredDate, value);
+            }
+        }
+
+        [Association]
+        public XPCollection<FeaturePercentResult> SuggestedFeatures {
+            get {
+                return GetCollection<FeaturePercentResult>(nameof(SuggestedFeatures));
             }
         }
         //office#3		

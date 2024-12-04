@@ -1,7 +1,9 @@
-﻿using DevExpress.ExpressApp.WebApi.Services;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.WebApi.Services;
 using DXCatBase.Module.Controllers;
 using dxTestSolution.Module.BusinessObjects;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace DXCatBase.WebApi.API;
 [Route("api/[controller]")]
@@ -23,6 +25,13 @@ public class EvaluateNewTextController :ControllerBase {
 
         ////
         var os = dataService.GetObjectSpace(typeof(TicketData));
+
+        var ticketData = os.FindObject<TicketData>(CriteriaOperator.FromLambda<TicketData>(x => x.TicketId == ticketStub.TicketId));
+        var ticketHelper = new EvaluateTextHelper();
+        if(ticketData == null) {
+            ticketData = ticketHelper.CreateTickedDataFromStub(ticketStub, os);
+        }
+
 
         var lst = os.GetObjects<FeaturePrompt>();
         var intro = @"You will get several tags. For each tag there is a promt that describes whether a text fits to the tag. 
@@ -46,8 +55,11 @@ public class EvaluateNewTextController :ControllerBase {
         var result = client.CompleteChat(intro, tagsJson, newTicketText);
 
         var resultText = result.Value.Content[0].Text;
-        var helper = new EvaluateTextHelper();
-        var jsonToSend = helper.GetPreparedJSON(resultText,parents);
+        
+        var tagsToSend= ticketHelper.GetTagsToSend(resultText, parents);
+        ///TODO!!! populate the TicketData.SuggestedFeatures collection and save
+        var jsonToSend = JsonConvert.SerializeObject(tagsToSend);
+       
 
         return jsonToSend;
 

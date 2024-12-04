@@ -133,18 +133,18 @@ function createAIElements(){
 
 
 async function evaluateTicket(){
-    let divResult;
-    let platformElement = document.getElementById('property-PlatformedProductId')
-    let viewModel = ko.contextFor(platformElement)
-    let subject= viewModel.$root.subject.value()
+    // let divResult;
+    // let platformElement = document.getElementById('property-PlatformedProductId')
+    // let viewModel = ko.contextFor(platformElement)
+    // let subject= viewModel.$root.subject.value()
 
-    let question = viewModel.$root.question().description()
+    // let question = viewModel.$root.question().description()
 
-    let myRes={Subject:subject,Question:question,FeatureId:null,TicketId:null}
+    let myRes=getTicketData();
 
     console.log('ready to send for evaluate');
     // console.log(JSON.stringify(myRes));
-    var response= await fetch("https://localhost:44319/api/EvaluateNewText", {
+    let response= await fetch("https://localhost:44319/api/EvaluateNewText", {
         method: "POST",
         body: JSON.stringify(myRes),
         headers: {
@@ -176,9 +176,40 @@ async function evaluateTicket(){
 
     });
 
+    let missLi=document.createElement('li');
+    let missLink= document.createElement('a');
+    missLink.innerHTML="tag is missed";
+    missLink.addEventListener('click', () => {
+        let promptRes={}
+
+        fetch("https://localhost:44319/api/GetPromptResult", {
+            method: "POST",
+            body:JSON.stringify(promptRes),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        });
+    });
+    missLi.appendChild(missLink);
+    divResult.appendChild(missLi)
+
+
     console.log('sent for evaluate');
 }
-function createTextFromTicket(){
+
+async function  test(){
+
+    let myRes={PromptId:"BE9D9216-CC94-4A22-B93B-845700FF5514",Result:"Miss"}
+    let response= await fetch("https://localhost:44319/api/GetPromptResult", {
+        method: "POST",
+        body:JSON.stringify(myRes),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+}
+
+function getTicketData(){
     let platformElement = document.getElementById('property-PlatformedProductId')
     let viewModel = ko.contextFor(platformElement)
     let subject= viewModel.$root.subject.value()
@@ -199,12 +230,17 @@ function createTextFromTicket(){
 
     let ticketId=viewModel.$root.friendlyId()
     let myRes={Subject:subject,Question:question,FeatureId:featureId,TicketId:ticketId}
+    return myRes;
+}
+
+function createTextFromTicket(){
+   let ticketData=getTicketData();
 
     console.log('ready to send');
     console.log(JSON.stringify(myRes));
     // fetch("https://localhost:44319/api/CustomEnterTicket", {
     //     method: "POST",
-    //     body: JSON.stringify(myRes),
+    //     body: JSON.stringify(ticketData),
     //     headers: {
     //         "Content-type": "application/json; charset=UTF-8"
     //     }

@@ -40,7 +40,9 @@ public class EvaluateNewTextControllerTests {
         parents["333"] = "333p";
         //act
         var cnt = new EvaluateTextHelper();
-        var res = cnt.GetPreparedJSON(input, parents);
+        var tagsToSend = cnt.GetTagsToSend(input, parents);
+
+        var res = JsonConvert.SerializeObject(tagsToSend);
         //assert
         var expected = @"[
 {""tagName"":""Speed"",""tagId"":""111"",""parentTagId"":""111p"",""percentage"":80},
@@ -69,7 +71,9 @@ public class EvaluateNewTextControllerTests {
         parents["444"] = "444p";
         //act
         var cnt = new EvaluateTextHelper();
-        var res = cnt.GetPreparedJSON(input, parents);
+        var tagsToSend = cnt.GetTagsToSend(input, parents);
+
+        var res = JsonConvert.SerializeObject(tagsToSend);
         //assert
         var expected = @"[
 {""tagName"":""SomeSuperTag"",""tagId"":""444"",""parentTagId"":""444p"",""percentage"":90},

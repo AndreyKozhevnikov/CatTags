@@ -21,17 +21,8 @@ public class CustomEnterTicketController :ControllerBase {
     [HttpPost]
     public void Post([FromBody] TicketDataStub ticketStub) {
         var objectSpace = dataService.GetObjectSpace(typeof(TicketData));
-
-        var existingTicketData = objectSpace.FindObject<TicketData>(CriteriaOperator.FromLambda<TicketData>(x => x.TicketId == ticketStub.TicketId));
-        if(existingTicketData != null) {
-            return;
-        }
-        var ticket = objectSpace.CreateObject<TicketData>();
-        ticket.Subject = ticketStub.Subject;
-        ticket.TicketId = ticketStub.TicketId;
-        ticket.FeatureId = ticketStub.FeatureId;
-        ticket.Question = ticketStub.Question;
-
+        var helper = new EvaluateTextHelper();
+        helper.CreateTickedDataFromStub(ticketStub,objectSpace);
         objectSpace.CommitChanges();
 
     }

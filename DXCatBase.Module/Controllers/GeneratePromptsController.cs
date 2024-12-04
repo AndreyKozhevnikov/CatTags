@@ -67,6 +67,7 @@ namespace DXCatBase.Module.Controllers {
                 var featurePrompt = os.CreateObject<FeaturePrompt>();
                 featurePrompt.Prompt= promptText;
                 featurePrompt.Feature= feature;
+                featurePrompt.EnteredDate=DateTime.Now;
                 os.CommitChanges();
                 Thread.Sleep(5000);
             }
