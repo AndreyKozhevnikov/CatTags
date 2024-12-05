@@ -240,7 +240,7 @@ function getTicketData(){
 function createTextFromTicket(){
    let ticketData=getTicketData();
 
-   if(ticketData.FeatureId!="000"){
+   if(ticketData.FeatureId=="000"){
     return;
    }
     console.log('ready to send');
