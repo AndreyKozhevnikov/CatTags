@@ -4,6 +4,7 @@ using DXCatBase.Module.BusinessObjects;
 using DXCatBase.Module.Controllers;
 using dxTestSolution.Module.BusinessObjects;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using Newtonsoft.Json;
 
 namespace DXCatBase.WebApi.API;
@@ -34,7 +35,21 @@ public class EvaluateNewTextController :ControllerBase {
         }
 
 
-        var lst = os.GetObjects<FeaturePrompt>();
+        var allPrompts = new List<FeaturePrompt>();
+
+        var features=os.GetObjects<Feature>();
+
+        foreach(var feature in features) {
+            if(feature.Prompts.Count == 0) {
+                continue;
+            }
+            var maxDate = feature.Prompts.Max(x => x.EnteredDate);
+            var prompt = feature.Prompts.Where(x => x.EnteredDate == maxDate).FirstOrDefault();
+            allPrompts.Add(prompt);
+        }
+
+
+
         var intro = @"You will get several tags. For each tag there is a promt that describes whether a text fits to the tag. 
             Based on this info you need to determine in percentage how well each tag fits to the new text. 
             You need to evaluate all tags.
@@ -46,10 +61,10 @@ Don't shorten any given id. Don't change them in any way.
 In your response, return all IDs (tagId) exactly as they are, without modifying or truncating them
 
 ";
-        var tags = lst.Select(x => new { tagName = x.Feature.Name, prompt = x.Prompt, tagId = x.Feature.Oid });
+        var tags = allPrompts.Select(x => new { tagName = x.Feature.Name, prompt = x.Prompt, tagId = x.Feature.Oid });
 
         Dictionary<string, string> parents = new Dictionary<string, string>();
-        lst.ToList().ForEach(x => parents[x.Feature.Oid.ToString()] = x.Feature.ParentCategory.Oid.ToString());
+        allPrompts.ToList().ForEach(x => parents[x.Feature.Oid.ToString()] = x.Feature.ParentCategory.Oid.ToString());
 
         var tagsJson = Newtonsoft.Json.JsonConvert.SerializeObject(tags);
         var newTicketText = Newtonsoft.Json.JsonConvert.SerializeObject(ticketStub);
