@@ -31,7 +31,8 @@ function createPopularTagsButtons() {
         newLink.innerHTML = x[1];
 
         newLink.addEventListener('click', () => {
-           
+            let tag={tagName:x[1],tagId:x[0],parentTagId:x[2]};
+            SetFeature(tag);
         });
 
         newLi.appendChild(newLink);
@@ -153,7 +154,7 @@ async function evaluateTicket(){
             "Content-type": "application/json; charset=UTF-8"
         }
     });
-    
+
     divResult = document.getElementById('divTagResults');
     let separatorLi= document.createElement('li');
     separatorLi.innerHTML='----------------';
@@ -212,7 +213,7 @@ function getFeatureId(){
 
     let featuresCount=viewModel2.$data.ticketField.selectedValues().length;
 
-   
+
 
 
     let featureId="000";
@@ -245,7 +246,7 @@ function createTextFromTicket(){
    }
     console.log('ready to send');
   //  console.log(JSON.stringify(myRes));
-  
+
     sendTicketData(ticketData);
     console.log('sent');
     // console.log(myRes);
@@ -313,7 +314,7 @@ $(document).ready(function () {
     createPopularTagsButtons();
     createSearchBox();
     createAIElements();
-    //  createTextFromTicket();
+      createTextFromTicket();
 });
 //console.log('test123');
 
