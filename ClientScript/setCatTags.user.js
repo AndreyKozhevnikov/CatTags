@@ -107,15 +107,20 @@ function myKeyUp() {
 
 function createAIElements(){
     let tabElement = document.getElementsByClassName('editable-properties')[1];
-    let newLi=document.createElement('li');
-    let newLink=document.createElement('a');
-    newLink.innerHTML ='create txt';
 
-    newLink.addEventListener('click', () => {
-        createTextFromTicket();
-    });
-    newLi.appendChild(newLink);
-    tabElement.appendChild(newLi);
+    let separEl=document.createElement('h1');
+     separEl.innerHTML ='===============';
+    tabElement.appendChild(separEl);
+
+//     let newLi=document.createElement('li');
+//     let newLink=document.createElement('a');
+//     newLink.innerHTML ='create txt';
+
+//     newLink.addEventListener('click', () => {
+//         createTextFromTicket();
+//     });
+//     newLi.appendChild(newLink);
+//     tabElement.appendChild(newLi);
 
 
     let divTagResult = document.createElement('div');
