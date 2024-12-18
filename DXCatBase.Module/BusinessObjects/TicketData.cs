@@ -84,6 +84,17 @@ namespace dxTestSolution.Module.BusinessObjects {
             }
         }
 
+        [PersistentAlias("SuggestedFeatures.Count()")]
+        public int SuggestedFeaturesCount {
+            get { return Convert.ToInt32(EvaluateAlias(nameof(SuggestedFeaturesCount))); }
+        }
+
+        [PersistentAlias("SuggestedFeatures[ToStr(Feature.Oid) = ^.FeatureId]")]
+        public bool IsSuggestedFeaturesContainSelected {
+            get { return Convert.ToBoolean(EvaluateAlias(nameof(IsSuggestedFeaturesContainSelected))); }
+        }
+
+
         [Association]
         public XPCollection<FeaturePercentResult> SuggestedFeatures {
             get {
