@@ -30,8 +30,26 @@ namespace DXCatBase.Module.Controllers {
             var generateOneFeaturePrompts = new SimpleAction(this, "GenerateOneFeaturePrompt", PredefinedCategory.Edit);
             generateOneFeaturePrompts.Execute += GenerateOneFeaturesPrompt_Execute;
 
+            var generateSelectedFeaturesPrompts = new SimpleAction(this, "GenerateSelectedFeaturePrompt", PredefinedCategory.Edit);
+            generateSelectedFeaturesPrompts.Execute += GenerateSelectedFeaturesPrompts_Execute;
+
             var evaluateTicketText = new SimpleAction(this, "CreateMainPrompt(del)", PredefinedCategory.Edit);
             evaluateTicketText.Execute += CreateMainPrompt_Execute;
+
+        }
+
+        private void GenerateSelectedFeaturesPrompts_Execute(object sender, SimpleActionExecuteEventArgs e) {
+
+            var ftrs = View.SelectedObjects.Cast<Feature>();
+            var os = Application.CreateObjectSpace<Feature>();
+            var client = GetClient();
+            foreach(var feature in ftrs) {
+                GeneratePromtForFeature(feature, os, client);
+                Thread.Sleep(5000);
+            }
+
+
+
 
         }
 
@@ -89,7 +107,7 @@ namespace DXCatBase.Module.Controllers {
 
             var client = GetClient();
             //  var result = client.CompleteChat("what is the meaning of the word Rio");
-           // var message1 = "You will receive several texts with subjects in JSON format. Most of them will fall under a single category. Your task is to create a prompt to evaluate whether future texts also belong to this category. Ensure that your prompt includes keywords to help identify texts within this category. Note that some texts may appear in this category by mistake, so if a text differs significantly from the others, skip it";
+            // var message1 = "You will receive several texts with subjects in JSON format. Most of them will fall under a single category. Your task is to create a prompt to evaluate whether future texts also belong to this category. Ensure that your prompt includes keywords to help identify texts within this category. Note that some texts may appear in this category by mistake, so if a text differs significantly from the others, skip it";
             foreach(var feature in features) {
                 GeneratePromtForFeature(feature, os, client);
                 //var data = GetTicketData(feature, os);
