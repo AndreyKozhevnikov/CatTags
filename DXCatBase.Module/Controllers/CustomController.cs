@@ -29,7 +29,11 @@ namespace dxTestSolution.Blazor.Server.Controllers;
 
 public class CustomController :ViewController {
     public CustomController() {
-        var myAction1 = new SimpleAction(this, "MyImport", PredefinedCategory.Edit);
+
+        //var myActionCSV = new SimpleAction(this, "ImportFeatureViewCSV", PredefinedCategory.Edit);
+        //myActionCSV.Execute += MyActionCSV_Execute; ;
+
+        var myAction1 = new SimpleAction(this, "FeatureImportFromTXT", PredefinedCategory.Edit);
         myAction1.Execute += MyImport_Execute;
 
         var myAction2 = new SimpleAction(this, "MyExport", PredefinedCategory.Edit);
@@ -48,6 +52,33 @@ public class CustomController :ViewController {
         // var mypopAction1 = new PopupWindowShowAction(this, "MyBlazorPopupAction1", null);
         // mypopAction1.CustomizePopupWindowParams += MyAction1_CustomizePopupWindowParams;
 
+    }
+
+    private void MyActionCSV_Execute(object sender, SimpleActionExecuteEventArgs e) {
+        var st = "c:\\temp\\CatDataCSV.csv";
+
+        var os = Application.CreateObjectSpace<Feature>();
+        var allFeatures = os.GetObjects<Feature>().ToList();
+        using(var reader = new StreamReader(st)) {
+            List<string> listA = new List<string>();
+            List<string> listB = new List<string>();
+            while(!reader.EndOfStream) {
+                var line = reader.ReadLine();
+                var values = line.Split(';');
+
+                var fName=values[0];
+                var fValue=values[1];
+
+                var rFeature=allFeatures.Where(x=>x.Name==fName).FirstOrDefault();
+                if(rFeature != null) {
+                    rFeature.ForSort=int.Parse(fValue); 
+                }
+
+                //listA.Add(values[0]);
+                //listB.Add(values[1]);
+            }
+        }
+        os.CommitChanges();
     }
 
     private void ImportWithAPIAction_Execute(object sender, PopupWindowShowActionExecuteEventArgs e) {

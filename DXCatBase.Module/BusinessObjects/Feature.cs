@@ -16,7 +16,7 @@ using System.Diagnostics;
 
 namespace dxTestSolution.Module.BusinessObjects {
     [DefaultClassOptions]
-    [DefaultProperty("Subject")]
+    
     [DebuggerDisplay("{Name} - {Oid}")]
     public class Feature :XPCustomObject, ITreeNode {
         public Feature(Session session)
@@ -66,6 +66,16 @@ namespace dxTestSolution.Module.BusinessObjects {
         public int TicketDataCount {
             get {
                 return TicketData.Count;
+            }
+        }
+
+        int _forSort;
+        public int ForSort {
+            get {
+                return _forSort;
+            }
+            set {
+                SetPropertyValue(nameof(ForSort), ref _forSort, value);
             }
         }
 
