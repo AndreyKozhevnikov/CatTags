@@ -62,7 +62,11 @@ namespace dxTestSolution.Module.BusinessObjects {
                 return GetCollection<FeaturePrompt>(nameof(Prompts));
             }
         }
-
+        public int PromptCount {
+            get {
+                return Prompts.Count;
+            }
+        }
         public int TicketDataCount {
             get {
                 return TicketData.Count;
