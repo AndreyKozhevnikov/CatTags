@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         Set tags
 // @namespace    http://tampermonkey.net/
-// @version      0.1.7
+// @version      0.1.8
 // @description  Set and search CAT Tags
 // @author       AndreyK
 // @match        https://isc.devexpress.com/internal/ticket/details/*
@@ -318,8 +318,8 @@ $(document).ready(function () {
 
     createPopularTagsButtons();
     createSearchBox();
-    createAIElements();
-      createTextFromTicket();
+   // createAIElements();
+     // createTextFromTicket();
 });
 //console.log('test123');
 
